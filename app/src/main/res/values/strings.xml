@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FSA</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="KebTempatMakan">Nilai Kebersihan Tempat Makan</string>
+    <string name="KebAlatMakan">Nilai Kebersihan Alat Makan</string>
+    <string name="KualitasBhnMakanan">Nilai Kualitas Bahan Makanan</string>
+    <string name="Simpan">Simpan</string>
+    <string name="Alasan">Alasan Offline</string>
+    <string name="Lokasi">Lokasi</string>
+</resources>
