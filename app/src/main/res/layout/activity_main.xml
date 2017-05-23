@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,20 +9,50 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:layout_gravity="center_vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
     tools:context="com.dvlchm.fsa.MainActivity">
+
+    <TextView
+        android:text="Food Survey App"
+        style="@style/Base.DialogWindowTitle.AppCompat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle=""
+        android:id="@+id/tvAppTitle" />
+
+    <TextView
+        android:text="Are you a surveyor?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:id="@+id/tvAreYou" />
 
     <Button
         android:id="@+id/buttonSignIn"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:text="Sign In"
+        style="@style/Base.TextAppearance.AppCompat.Button"
         android:onClick="signIn"/>
 
-    <Button
-        android:id="@+id/buttonMakeReport"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Make Report" />
+    <ImageView
+        android:layout_width="87dp"
+        android:layout_height="101dp"
+        app:srcCompat="@mipmap/platefood2"
+        android:id="@+id/imageView" />
+
+    <!--<Button-->
+        <!--android:id="@+id/buttonMakeReport"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Make Report" />-->
 
 </LinearLayout>

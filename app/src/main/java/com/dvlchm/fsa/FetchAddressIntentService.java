@@ -39,7 +39,8 @@ public class FetchAddressIntentService extends IntentService {
         try {
 
             Log.e("lokasi : ", "mencari lokasi");
-            address_list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
+            if(loc!=null)
+                address_list = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
         } catch (IOException e) {
             Log.e("lokasi : ", "tidak menemukan lokasi " + e.toString());
             e.printStackTrace();
