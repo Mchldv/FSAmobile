@@ -24,7 +24,19 @@ public class AssignmentActivity extends Activity {
     ListView listView;
     Bundle bundle;
     public static String username;
+    StringRequest stringRequest;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(MainActivity.InternetConnection) {
+            RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+            requestQueue.add(stringRequest);
+        }
+        else {
+            Toast.makeText(getBaseContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +48,7 @@ public class AssignmentActivity extends Activity {
 
         listView = (ListView)findViewById(R.id.listViewAssignment);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL,
+        stringRequest = new StringRequest(Request.Method.POST,JSON_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -60,8 +72,16 @@ public class AssignmentActivity extends Activity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
-        requestQueue.add(stringRequest);
+
+
+        if(MainActivity.InternetConnection) {
+            RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+            requestQueue.add(stringRequest);
+        }
+        else {
+            Toast.makeText(getBaseContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+            //enable internet
+        }
 
     }
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\WINDA\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.19\a8f23f65fc1e522ee4a1a697ee569901a46741fa\library-1.0.19.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\library-1.0.19_da062e12b860214f8586ae142b5cb7bfbb181a13.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\net.gotev\uploadservice\2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="372295458f730b0715898d4b477a85aa1a777504">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\net.gotev-uploadservice-2.1_c8d46e9aa34ce8fb3d07d256ae3db76b6dd6d7e3.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.4.0_dc83d38236f9d45d20f5c008ebf40968536baf32.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.4.0_9bd4dbb0d39f9145d08c2c5c7cbeeaae64ac77d0.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.4.0_a3b2c862fb06814d25c29a0a94aba7e3c59a54f9.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.mcxiaoke.volley\library-aar\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="e40b9a81989bd4a846018551c280f8c4d837bf2e">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\com.mcxiaoke.volley-library-aar-1.0.0_e6317b31236e586b686d140349d25ec40b164f23.jar" />
+    </item>
+    <item
+        jar="C:\Users\WINDA\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_b6b8a1af9e7f2f75020b3db1d2f340866516794c.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_1149ec0aeb94c0e81417ea56b375ff06a4bcaf2d.jar" />
+    </item>
+    <item
+        jar="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="E:\ITS\SEMESTER 6\Rekayasa Kebutuhan\FSAmobile\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_e2ce4a3b7ea3345dac9b856a83b967471345f038.jar" />
+    </item>
+
+</items>
