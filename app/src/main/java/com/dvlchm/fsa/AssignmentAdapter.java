@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,24 +37,33 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
         }
 //        TextView assignmentId = (TextView) convertView.findViewById(R.id.tvAssignmentId);
         TextView locationName = (TextView) convertView.findViewById(R.id.tvLocation);
+        Button btnSend = (Button) convertView.findViewById(R.id.btnSendOffline);
+        Button makeReport = (Button) convertView.findViewById(R.id.btnMakereport);
 
         final String assignment_id = assignmentObject.getAssignmentId();
         final String user = AssignmentActivity.username;
+        final String id_lokasi = assignmentObject.getIdLokasi();
+        final String id_surveyor = assignmentObject.getIdSurveyor();
         final Bundle bundle = new Bundle();
         bundle.putString("idAssignment",assignment_id);
         bundle.putString("username",user);
+        bundle.putString("idLokasi",id_lokasi);
+        bundle.putString("idSurveyor",id_surveyor);
+
 
 
         Toast.makeText(getContext(),user,Toast.LENGTH_LONG).show();
 
         if(assignmentObject.getLocationName().equals("0")){
             locationName.setText("There is no assignment.");
+            btnSend.setVisibility(View.GONE);
+            makeReport.setVisibility(View.GONE);
 //            locationName.setText("");
         }
         else {
 //            assignmentId.setText(assignmentObject.getAssignmentId());
             locationName.setText(assignmentObject.getLocationName());
-            locationName.setOnClickListener(new View.OnClickListener() {
+            makeReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     bukaIntent(MakeReportActivity.class,bundle);

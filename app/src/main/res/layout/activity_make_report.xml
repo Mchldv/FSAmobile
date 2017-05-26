@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,18 +55,44 @@
         android:hint="@string/Alasan"
         android:inputType="text"/>
 
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Simpan"
-        android:layout_marginBottom="0dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageView" />
 
     <Button
-        android:id="@+id/buttonRefresh"
+        android:id="@+id/buttonTakePhoto"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Refresh"
+        android:text="Take photo"
+        android:onClick="takeImageFromCamera"
         android:layout_marginBottom="0dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Refresh"
+            android:layout_marginBottom="0dp" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Simpan"
+            android:layout_marginBottom="0dp" />
+
+
+
+    </LinearLayout>
+
 
 </LinearLayout>
