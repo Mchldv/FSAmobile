@@ -21,8 +21,10 @@
             android:id="@+id/listViewAssignment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-
-
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/Refresh"
+            android:onClick="Refresh"/>
 </LinearLayout>

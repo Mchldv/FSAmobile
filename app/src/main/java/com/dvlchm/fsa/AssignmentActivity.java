@@ -2,7 +2,10 @@ package com.dvlchm.fsa;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AssignmentActivity extends Activity {
@@ -31,10 +35,13 @@ public class AssignmentActivity extends Activity {
         super.onResume();
         if(MainActivity.InternetConnection) {
             RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+            Log.e("request again",stringRequest.toString());
             requestQueue.add(stringRequest);
         }
-        else {
+        else
+        {
             Toast.makeText(getBaseContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+            showAssignment();
         }
     }
 
@@ -44,6 +51,8 @@ public class AssignmentActivity extends Activity {
         setContentView(R.layout.activity_assignment);
 
         bundle = getIntent().getExtras();
+        Button btnSend = (Button)findViewById(R.id.btnSendOffline);
+        btnSend.setEnabled(false);
         username = bundle.getString("username");
 
         listView = (ListView)findViewById(R.id.listViewAssignment);
@@ -54,13 +63,14 @@ public class AssignmentActivity extends Activity {
                     public void onResponse(String response) {
 
                         showAssignment(response);
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.e("error","error_response");
                         Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                        showAssignment();
                     }
                 }){
             @Override
@@ -76,6 +86,7 @@ public class AssignmentActivity extends Activity {
 
         if(MainActivity.InternetConnection) {
             RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+            Log.e("request",stringRequest.toString());
             requestQueue.add(stringRequest);
         }
         else {
@@ -85,14 +96,33 @@ public class AssignmentActivity extends Activity {
 
     }
 
+    public void Refresh(View view)
+    {
+        this.onResume();
+    }
+
     void showAssignment(String response)
     {
         ParseJson pj = new ParseJson(response);
-        ArrayList<AssignmentObject> assignmentObjects = new ArrayList <AssignmentObject>();
+        pj.lihatAssignmentParse(getApplicationContext(),username);
+        add_to_adapter();
+    }
+
+    private void add_to_adapter() {
+        List<AssignmentObject> assignmentObjects = new ArrayList <AssignmentObject>();
+
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(this);
+        datasource.open();
+        assignmentObjects = datasource.getAllEntry(username);
+        datasource.close();
         AssignmentAdapter dummy = new AssignmentAdapter(this,0,assignmentObjects);
-//        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-        pj.lihatAssignmentParse(dummy);
 
         listView.setAdapter(dummy);
     }
+
+    void showAssignment()
+    {
+        add_to_adapter();
+    }
+
 }

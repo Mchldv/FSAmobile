@@ -14,7 +14,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,6 +33,7 @@ import java.util.List;
 public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
 
 //    private static final String URL="http://139.59.235.178/pembuatankapal/hapuskomponen.php";
+    private static final String URL="https://winda1996.000webhostapp.com/FSA/action/actionMobile_MakeReport.php";
 
     public AssignmentAdapter(Context context, int resource, List<AssignmentObject> objects) {
         super(context, resource, objects);
@@ -45,12 +55,19 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
         final String id_lokasi = assignmentObject.getIdLokasi();
         final String id_surveyor = assignmentObject.getIdSurveyor();
         final Bundle bundle = new Bundle();
+        if(assignmentObject.getDone()==1) {
+            btnSend.setEnabled(true);
+            bundle.putString("surroundingHy", assignmentObject.getKeb_TM().toString());
+            bundle.putString("cutlerHy", assignmentObject.getKeb_AM().toString());
+            bundle.putString("foodH", assignmentObject.getNil_K().toString());
+            bundle.putString("address", assignmentObject.getAddress());
+            bundle.putString("alasan", assignmentObject.getExcuse());
+            bundle.putString("image", assignmentObject.getImage());
+        }
         bundle.putString("idAssignment",assignment_id);
         bundle.putString("username",user);
         bundle.putString("idLokasi",id_lokasi);
         bundle.putString("idSurveyor",id_surveyor);
-
-
 
         Toast.makeText(getContext(),user,Toast.LENGTH_LONG).show();
 
@@ -69,6 +86,12 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
                     bukaIntent(MakeReportActivity.class,bundle);
                 }
             });
+            btnSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SendOffline(bundle);
+                }
+            });
         }
 
 
@@ -81,6 +104,66 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
 //        });
 
         return convertView;
+    }
+
+    private void SendOffline(Bundle b) {
+        final String surroundingH= b.getString("surroundingHy");
+        final String address= b.getString("address");
+        final String username= b.getString("username");
+        final String foodH= b.getString("foodH");
+        final String cutleryH= b.getString("cutlerHy");
+        final String stringImage= b.getString("image");
+        final String id_assignment= b.getString("idAssignment");
+        final String id_lokasi= b.getString("idLokasi");
+        final String id_surveyor= b.getString("idSurveyor");
+        //final String lat= b.getString("surroundingHy");
+        //final String long_= b.getString("surroundingHy");
+
+
+        StringRequest stringRequest = new StringRequest (Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getContext(),response, Toast.LENGTH_LONG).show();
+                        deleteTask(id_assignment);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String,String> getParams() {
+                Map<String,String> params = new HashMap<>();
+                params.put("user", username);
+                params.put("address",address);
+                params.put("foodHy", foodH);
+                params.put("cutleryHy",cutleryH);
+                params.put("surroundingHy",surroundingH);
+                params.put("image",stringImage);
+                params.put("idAssignment",id_assignment);
+                params.put("idLokasi",id_lokasi);
+                params.put("idSurveyor",id_surveyor);
+                //params.put("latitude",lat_);
+                //params.put("longitude",long_);
+
+                return params;
+            }
+        };
+
+        if(MainActivity.InternetConnection){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+        }
+    }
+
+    private void deleteTask(String id_assignment) {
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getContext());
+        datasource.open();
+        datasource.delteTask(id_assignment);
+        datasource.close();
     }
 
     void bukaIntent(Class x,Bundle bundle){

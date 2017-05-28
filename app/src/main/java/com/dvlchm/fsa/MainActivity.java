@@ -3,6 +3,7 @@ package com.dvlchm.fsa;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity
 {
     public static boolean InternetConnection=false;
     private static final int MY_REQUEST_FINE_LOC = 867;
+    private static final int MY_REQUEST_CAMERA = 243;
 
     Button btnSignIn,btnMakeReport;
     LoginDataBaseAdapter loginDataBaseAdapter;
@@ -27,6 +29,7 @@ public class MainActivity extends Activity
 
     NetworkStateReceiver networkStateReceiver = new NetworkStateReceiver(new NetworkStateReceiver.NetworkListener() {
         @Override
+
         public void onNetworkAvailable() {
 //            btnMakeReport.setEnabled(false);
             InternetConnection=true;
@@ -37,27 +40,8 @@ public class MainActivity extends Activity
         public void onNetworkUnavailable() {
 //            btnMakeReport.setEnabled(true);
             InternetConnection=false;
-            btnSignIn.setEnabled(false);
         }
     });
-
-    /*private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-    private void enableMobileData(Context context, boolean enabled) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        final ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final Class conmanClass = Class.forName(cm.getClass().getName());
-        final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
-        connectivityManagerField.setAccessible(true);
-        final Object connectivityManager = connectivityManagerField.get(cm);
-        final Class connectivityManagerClass =  Class.forName(connectivityManager.getClass().getName());
-        final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-        setMobileDataEnabledMethod.setAccessible(true);
-        setMobileDataEnabledMethod.invoke(connectivityManager, enabled);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,16 +54,18 @@ public class MainActivity extends Activity
         {
 
             // TODO: Consider calling
-            Log.e("lokasi : ","salah");
+            Log.e("request location : ","disabled");
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_REQUEST_FINE_LOC);
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return;
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+
+            // TODO: Consider calling
+            Log.e("request camerqa : ","disabled");
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},MY_REQUEST_CAMERA);
         }
 
         // create a instance of SQLite Database
@@ -89,21 +75,13 @@ public class MainActivity extends Activity
         loginDataBaseAdapter.insertEntry("afann","123");
         loginDataBaseAdapter.insertEntry("nellac","123");
 
+        //Log.e("id_user afann",loginDataBaseAdapter.cek_username("afann").toString());
+        //Log.e("id_user vennyc",loginDataBaseAdapter.cek_username("vennyc"));
+        //Log.e("id_user nellac",loginDataBaseAdapter.cek_username("nellac"));
+
         // Get The Refference Of Buttons
         btnSignIn=(Button)findViewById(R.id.buttonSignIn);
-//        btnMakeReport=(Button)findViewById(R.id.buttonMakeReport);
 
-        //btnMakeReport.setEnabled(isNetworkAvailable());
-        // Set OnClick Listener on MakeReportActivity button
-//        btnMakeReport.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//
-//                /// Create Intent for SignUpActivity  abd Start The Activity
-//                Intent intentMakeReport=new Intent(getApplicationContext(),MakeReportActivity.class);
-//                startActivity(intentMakeReport);
-//            }
-//        });
         registerReceiver(networkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
@@ -113,7 +91,7 @@ public class MainActivity extends Activity
         startActivityForResult(myIntent,0);
     }
 
-    // Methos to handleClick Event of Sign In Button
+    // MethoD to handleClick Event of Sign In Button
     public void signIn(View V)
     {
         final Dialog dialog = new Dialog(MainActivity.this);
@@ -145,8 +123,6 @@ public class MainActivity extends Activity
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                     openIntent(AssignmentActivity.class, bundle);
-//                    Intent intentMakeReport=new Intent(getApplicationContext(),MakeReportActivity.class);
-//                    startActivity(intentMakeReport);
                 }
                 else
                 {
@@ -169,6 +145,12 @@ public class MainActivity extends Activity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case MY_REQUEST_FINE_LOC:{
+                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+                {
+                    return;
+                }
+            }
+            case MY_REQUEST_CAMERA:{
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
                 {
                     return;

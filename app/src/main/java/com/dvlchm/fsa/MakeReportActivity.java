@@ -1,6 +1,7 @@
 package com.dvlchm.fsa;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -83,6 +85,7 @@ public class MakeReportActivity extends Activity {
     LocationManager lm;
     LocationListener ll;
 
+    @SuppressLint("ParcelCreator")
     class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler handler) {
             super(handler);
@@ -139,6 +142,13 @@ public class MakeReportActivity extends Activity {
         btnTakePhoto = (Button)findViewById(R.id.buttonTakePhoto);
         image = (ImageView)findViewById(R.id.imageView);
 
+        final String userName=editTextUserName.getText().toString();
+        final String kebAM=editTextKebAlatMakan.getText().toString();
+        final String kebTM=editTextKebTempatMakan.getText().toString();
+        final String nilK=editTextNilaiKualitas.getText().toString();
+        final String alasan=editTextAlasan.getText().toString();
+        final String lokasi=editTextLokasi.getText().toString();
+
         editTextUserName.setText(username);
         editTextUserName.setEnabled(false);
         image.setVisibility(View.GONE);
@@ -152,8 +162,6 @@ public class MakeReportActivity extends Activity {
             checkGPS();
             btnSaveSurvey.setText("Send");
             editTextLokasi.setEnabled(false);
-
-
         }
 
 
@@ -174,13 +182,6 @@ public class MakeReportActivity extends Activity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                String userName=editTextUserName.getText().toString();
-                String kebAM=editTextKebAlatMakan.getText().toString();
-                String kebTM=editTextKebTempatMakan.getText().toString();
-                String nilK=editTextNilaiKualitas.getText().toString();
-                String alasan=editTextAlasan.getText().toString();
-                String lokasi=editTextLokasi.getText().toString();
-
                 // check if any of the fields are vaccant
                 if(MainActivity.InternetConnection)
                 {
@@ -188,22 +189,14 @@ public class MakeReportActivity extends Activity {
                 }
                 else
                 {
-                    if(userName.equals("")||kebAM.equals("")||kebTM.equals("")||nilK.equals("")||alasan.equals("")) {
-                        Toast.makeText(getApplicationContext(), "tidak ada internet : Isi semua kolom", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    else {
-                        // save in local directory
-//                        String data = MakeSurvey(userName,lokasi,kebAM,kebTM,nilK,alasan);
-
+                    saveReport();
 //                        writeToFile(data,getApplicationContext());
 //                        //surveyDataBaseAdapter.insertEntry(userName, kebAM, kebAM, nilK);
 //                        Toast.makeText(getApplicationContext(), "Data Survey Saved ", Toast.LENGTH_LONG).show();
 //                        String tulisan = readFromFile(getApplicationContext(),"survey.txt");
 //                        Toast.makeText(getApplicationContext(), tulisan, Toast.LENGTH_LONG).show();
 //                        Intent intent = new Intent(getApplicationContext(),TakePhoto.class);
-//                        startActivity(intent);
-                    }
+//                        startActivity(intent)
                 }
             }
         });
@@ -217,6 +210,23 @@ public class MakeReportActivity extends Activity {
         });
     }
 
+    private void saveReport() {
+        final String address = editTextLokasi.getText().toString();
+        final String foodH = editTextNilaiKualitas.getText().toString();
+        final String cutleryH = editTextKebAlatMakan.getText().toString();
+        final String surroundingH = editTextKebTempatMakan.getText().toString();
+        final String excuse = editTextAlasan.getText().toString();
+        final String stringImage = getStringImage(mphoto);
+        final String lat_ = String.valueOf(latitude);
+        final String long_ = String.valueOf(longitude);
+
+        if (address.equals("") || foodH.equals("") || cutleryH.equals("") || surroundingH.equals("") || stringImage.equals("") || excuse.equals("")) {
+            Toast.makeText(getBaseContext(),"All field and photo is required.",Toast.LENGTH_LONG).show();
+        }
+        else {
+            surveyDone(excuse,surroundingH,cutleryH,foodH,address,stringImage);
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -251,8 +261,7 @@ public class MakeReportActivity extends Activity {
 
     }
 
-    public static String convertStreamtoString(InputStream is) throws Exception
-    {
+    public static String convertStreamtoString(InputStream is) throws Exception {
         StringBuilder data = new StringBuilder();
 
         BufferedReader bf= new BufferedReader(new InputStreamReader(is));
@@ -264,8 +273,7 @@ public class MakeReportActivity extends Activity {
         return data.toString();
     }
 
-    private String readFromFile(Context context, String fileName)
-    {
+    private String readFromFile(Context context, String fileName) {
         Log.e("read",fileName);
         try {
             File file = new File(getFilesDir(),fileName);
@@ -284,8 +292,7 @@ public class MakeReportActivity extends Activity {
         return "Ada yang salah";
     }
 
-    protected void startIntentService()
-    {
+    protected void startIntentService() {
         Intent intent = new Intent(this,FetchAddressIntentService.class);
         intent.putExtra(Constants.RECEIVER,mResultReceiver);
         intent.putExtra(Constants.LOCATION_DATA_EXTRA,mLastLocation);
@@ -314,8 +321,7 @@ public class MakeReportActivity extends Activity {
         startActivityForResult(myIntent,0);
     }
 
-    public boolean checkGPS()
-    {
+    public boolean checkGPS() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
 
@@ -323,13 +329,6 @@ public class MakeReportActivity extends Activity {
             Log.e("lokasi : ","salah");
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_REQUEST_FINE_LOC);
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return;
             return true;
         }
         else
@@ -378,8 +377,7 @@ public class MakeReportActivity extends Activity {
         }
     }
 
-    public void SubmitReport()
-    {
+    public void SubmitReport() {
         final String address = editTextLokasi.getText().toString();
         final String foodH = editTextNilaiKualitas.getText().toString();
         final String cutleryH = editTextKebAlatMakan.getText().toString();
@@ -397,6 +395,7 @@ public class MakeReportActivity extends Activity {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(getBaseContext(),response, Toast.LENGTH_LONG).show();
+                            deleteTask();
                         }
                     },
                     new Response.ErrorListener() {
@@ -429,6 +428,20 @@ public class MakeReportActivity extends Activity {
         }
     }
 
+    private void deleteTask() {
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getApplicationContext());
+        datasource.open();
+        datasource.delteTask(id_assignment);
+        datasource.close();
+    }
+
+    private void surveyDone(String alasan,String keb_TM, String keb_AM, String nil_K, String lokasi, String image) {
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getApplicationContext());
+        datasource.open();
+        datasource.updateDone(id_assignment,alasan,keb_TM,keb_AM,nil_K,lokasi,image);
+        datasource.close();
+    }
+
     public void takeImageFromCamera(View view) {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -447,11 +460,9 @@ public class MakeReportActivity extends Activity {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, 20, baos);
             byte[] imageBytes = baos.toByteArray();
-            String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-            return encodedImage;
+            return Base64.encodeToString(imageBytes, Base64.DEFAULT);
         }
         else return "";
     }
-
 
 }

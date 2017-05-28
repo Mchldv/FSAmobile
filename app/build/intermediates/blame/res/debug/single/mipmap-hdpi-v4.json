@@ -1,10 +1,10 @@
 [
     {
-        "merged": "E:\\ITS\\SEMESTER 6\\Rekayasa Kebutuhan\\FSAmobile\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\ic_launcher.png",
-        "source": "E:\\ITS\\SEMESTER 6\\Rekayasa Kebutuhan\\FSAmobile\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\platefood2.png",
+        "source": "F:\\Android\\FSA-Mobile\\app\\src\\main\\res\\mipmap-hdpi\\platefood2.png"
     },
     {
-        "merged": "E:\\ITS\\SEMESTER 6\\Rekayasa Kebutuhan\\FSAmobile\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\platefood2.png",
-        "source": "E:\\ITS\\SEMESTER 6\\Rekayasa Kebutuhan\\FSAmobile\\app\\src\\main\\res\\mipmap-hdpi\\platefood2.png"
+        "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\ic_launcher.png",
+        "source": "F:\\Android\\FSA-Mobile\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     }
 ]

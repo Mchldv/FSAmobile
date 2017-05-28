@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by User on 5/14/2017.
@@ -16,7 +17,7 @@ public class LoginDataBaseAdapter {
     // TODO: Create public field for each column in your table.
     // SQL Statement to create a new database.
     static final String DATABASE_CREATE = "create table "+"LOGIN"+
-            "( " +"ID"+" integer primary key autoincrement,"+ "USERNAME text, PASSWORD text); ";
+            "( " +"ID"+" integer primary key autoincrement,"+ "USERNAME text, PASSWORD text, ID_USER text); ";
     // Variable to hold the database instance
     public SQLiteDatabase db;
     // Context of the application using the database.
@@ -85,5 +86,35 @@ public class LoginDataBaseAdapter {
 
         String where="USERNAME = ?";
         db.update("LOGIN",updatedValues, where, new String[]{userName});
+    }
+
+    public void insertID_USER(String id, String userName)
+    {
+        ContentValues updatedValues = new ContentValues();
+        // Assign values for each row.
+        updatedValues.put("ID_USER", id);
+
+        String where="USERNAME = ?";
+        db.update("LOGIN",updatedValues, where,new String[]{userName});
+    }
+
+    public String cek_username(String userName) {
+        SQLiteDatabase db = getDatabaseInstance();
+        if(db!=null) {
+            Log.e("db",db.toString());
+            Cursor cursor = db.query("LOGIN", null, " USERNAME=?", new String[]{userName}, null, null, null);
+            Log.e("cursor", cursor.toString());
+            cursor.moveToFirst();
+            if (cursor.getCount() < 1) // UserName Not Exist
+            {
+                cursor.close();
+                return "-1";
+            }
+            String id_user = cursor.getString(cursor.getColumnIndex("ID_USER"));
+            cursor.close();
+            return id_user;
+        }
+        Log.e("db_null","true");
+        return "-1";
     }
 }
