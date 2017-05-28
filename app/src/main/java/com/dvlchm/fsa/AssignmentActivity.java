@@ -29,14 +29,46 @@ public class AssignmentActivity extends Activity {
     Bundle bundle;
     public static String username;
     StringRequest stringRequest;
+    Button btnRefresh;
 
     @Override
     protected void onResume() {
         super.onResume();
+        //setContentView(R.layout.activity_assignment);
+
         if(MainActivity.InternetConnection) {
             RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
+            stringRequest = new StringRequest(Request.Method.POST,JSON_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            showAssignment(response);
+                            Log.e("receive","true");
+                            btnRefresh.setEnabled(true);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("error","error_response");
+                            Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                            btnRefresh.setEnabled(true);
+                            showAssignment();
+                        }
+                    }){
+                @Override
+                protected Map<String,String> getParams() {
+                    Map<String,String> params = new HashMap<>();
+                    params.put("username",username);
+
+                    return params;
+                }
+            };
+
             Log.e("request again",stringRequest.toString());
             requestQueue.add(stringRequest);
+            Toast.makeText(getBaseContext(),"Fetch Data Online",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -51,9 +83,10 @@ public class AssignmentActivity extends Activity {
         setContentView(R.layout.activity_assignment);
 
         bundle = getIntent().getExtras();
-        Button btnSend = (Button)findViewById(R.id.btnSendOffline);
-        btnSend.setEnabled(false);
+        //Button btnSend = (Button)findViewById(R.id.btnSendOffline);
+        //btnSend.setEnabled(false);
         username = bundle.getString("username");
+        btnRefresh = (Button)findViewById(R.id.btnRefreshList);
 
         listView = (ListView)findViewById(R.id.listViewAssignment);
 
@@ -63,6 +96,8 @@ public class AssignmentActivity extends Activity {
                     public void onResponse(String response) {
 
                         showAssignment(response);
+                        Log.e("receive","true");
+                        btnRefresh.setEnabled(true);
                     }
                 },
                 new Response.ErrorListener() {
@@ -70,6 +105,7 @@ public class AssignmentActivity extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("error","error_response");
                         Toast.makeText(getBaseContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                        btnRefresh.setEnabled(true);
                         showAssignment();
                     }
                 }){
@@ -87,6 +123,7 @@ public class AssignmentActivity extends Activity {
         if(MainActivity.InternetConnection) {
             RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
             Log.e("request",stringRequest.toString());
+            Toast.makeText(getBaseContext(),"Fetch Data Online",Toast.LENGTH_SHORT).show();
             requestQueue.add(stringRequest);
         }
         else {
@@ -98,6 +135,7 @@ public class AssignmentActivity extends Activity {
 
     public void Refresh(View view)
     {
+        btnRefresh.setEnabled(false);
         this.onResume();
     }
 

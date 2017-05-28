@@ -18,13 +18,12 @@ import java.util.List;
 public class AssignmentDataBaseAdapter {
     static final String DATABASE_NAME = "fsa.db";
     static final int DATABASE_VERSION = 1;
-    private String[] allColumns = {"ID_USER", "ID_LIST", "ID_LOKASI", "PLACE","DONE"
-    ,"KEB_TM","KEB_AM","N_KUALITAS","ALASAN","REAL_ADDRESS","IMAGE","LAT","LONG"};
+    private String[] allColumns = {"ID_USER", "ID_LIST", "ID_LOKASI", "PLACE","DONE","KEB_TM","KEB_AM","N_KUALITAS","ALASAN","REAL_ADDRESS","IMAGE","LAT","LONG"};
     // TODO: Create public field for each column in your table.
     // SQL Statement to create a new database.
     static final String DATABASE_CREATE = "create table "+"ASSIGNMENT"+
-            "( " +"ID_LIST"+" text primary key,"+ "ID_USER text, ID_LOKASI text, PLACE text, DONE integer" +
-            "KEB_TM integer, KEB_AM integer, N_KUALITAS integer, ALASAN text, REAL_ADDRESS text" +
+            "( " +"ID_LIST"+" text primary key,"+ " ID_USER text, ID_LOKASI text, PLACE text, DONE integer, " +
+            "KEB_TM integer, KEB_AM integer, N_KUALITAS integer, ALASAN text, REAL_ADDRESS text," +
             "IMAGE text, LAT text, LONG text); ";
     // Variable to hold the database instance
     public SQLiteDatabase db;
@@ -79,7 +78,7 @@ public class AssignmentDataBaseAdapter {
     {
         String id= cek_username(username);
         List<AssignmentObject> tasks=new ArrayList<AssignmentObject>();
-        Cursor cursor = db.query("ASSIGNMENT",allColumns,"ID_USER="+id,null,null,null,null);
+        Cursor cursor = db.query("ASSIGNMENT",allColumns,"ID_USER="+id+" "+"AND DONE<2",null,null,null,null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast())
         {
@@ -142,7 +141,7 @@ public class AssignmentDataBaseAdapter {
                 longitude = cursor.getString(cursor.getColumnIndex("LONG"));
             }
             else longitude="belum diisi";
-            AssignmentObject task = new AssignmentObject(id_list,place,id_lokasi,id_user,done,keb_TM,keb_AM,nil_K,alasan,real_address,image);
+            AssignmentObject task = new AssignmentObject(id_list,place,id_lokasi,id_user,done,keb_TM,keb_AM,nil_K,alasan,real_address,image,lat,longitude);
             Log.e("get data","cursorToComment end");
             return task;
         }
@@ -175,7 +174,7 @@ public class AssignmentDataBaseAdapter {
         return false;
     }
 
-    public void updateDone(String id_list, String alasan, String Keb_TM, String Keb_AM,String n_kualitas, String lokasi, String Image)
+    public void updateDone(String id_list, String alasan, String Keb_TM, String Keb_AM,String n_kualitas, String lokasi, String Image, String lat, String long_)
     {
         ContentValues updatedValues = new ContentValues();
         // Assign values for each row.
@@ -184,17 +183,26 @@ public class AssignmentDataBaseAdapter {
         updatedValues.put("KEB_AM", Keb_AM);
         updatedValues.put("N_KUALITAS", n_kualitas);
         updatedValues.put("REAL_ADDRESS", lokasi);
+        updatedValues.put("ALASAN",alasan);
         updatedValues.put("IMAGE", Image);
-//        updatedValues.put("LAT",);
-//        updatedValues.put("LONG", 1);
+        updatedValues.put("LAT",lat);
+        updatedValues.put("LONG",long_);
 
         String where="ID_LIST = ?";
         db.update("ASSIGNMENT",updatedValues, where,new String[]{id_list});
     }
 
     public int delteTask(String id_assignment) {
-        String where="ID-LIST="+id_assignment;
+        String where="ID_LIST="+id_assignment;
         // Toast.makeText(context, "Number fo Entry Deleted Successfully : "+numberOFEntriesDeleted, Toast.LENGTH_LONG).show();
         return db.delete("ASSIGNMENT", where, null);
+    }
+
+    public void updateSend(String id_list) {
+        ContentValues updatedValues = new ContentValues();
+        // Assign values for each row.
+        updatedValues.put("DONE", 2);
+        String where="ID_LIST = ?";
+        db.update("ASSIGNMENT",updatedValues, where,new String[]{id_list});
     }
 }

@@ -20,12 +20,12 @@
         "source": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\notification_media_action.xml"
     },
     {
-        "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_home.xml",
-        "source": "F:\\Android\\FSA-Mobile\\app\\src\\main\\res\\layout\\activity_home.xml"
-    },
-    {
         "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
         "source": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_home.xml",
+        "source": "F:\\Android\\FSA-Mobile\\app\\src\\main\\res\\layout\\activity_home.xml"
     },
     {
         "merged": "F:\\Android\\FSA-Mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",

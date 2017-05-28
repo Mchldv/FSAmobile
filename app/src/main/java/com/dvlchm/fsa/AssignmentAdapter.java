@@ -56,13 +56,17 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
         final String id_surveyor = assignmentObject.getIdSurveyor();
         final Bundle bundle = new Bundle();
         if(assignmentObject.getDone()==1) {
+            if(MainActivity.InternetConnection)
             btnSend.setEnabled(true);
+            makeReport.setEnabled(false);
             bundle.putString("surroundingHy", assignmentObject.getKeb_TM().toString());
             bundle.putString("cutlerHy", assignmentObject.getKeb_AM().toString());
             bundle.putString("foodH", assignmentObject.getNil_K().toString());
             bundle.putString("address", assignmentObject.getAddress());
             bundle.putString("alasan", assignmentObject.getExcuse());
             bundle.putString("image", assignmentObject.getImage());
+            bundle.putString("latitude",assignmentObject.getLat());
+            bundle.putString("longitude",assignmentObject.getLongitude());
         }
         bundle.putString("idAssignment",assignment_id);
         bundle.putString("username",user);
@@ -125,7 +129,8 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getContext(),response, Toast.LENGTH_LONG).show();
-                        deleteTask(id_assignment);
+                        //deleteTask(id_assignment);
+                        updateDone(id_assignment);
                     }
                 },
                 new Response.ErrorListener() {
@@ -157,6 +162,13 @@ public class AssignmentAdapter extends ArrayAdapter<AssignmentObject> {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
         }
+    }
+
+    private void updateDone(String id_assignment) {
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getContext());
+        datasource.open();
+        datasource.updateSend(id_assignment);
+        datasource.close();
     }
 
     private void deleteTask(String id_assignment) {

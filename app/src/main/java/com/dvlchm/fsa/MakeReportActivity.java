@@ -66,6 +66,7 @@ import static java.security.AccessController.getContext;
 public class MakeReportActivity extends Activity {
 
     private static final int MY_REQUEST_FINE_LOC = 867;
+    private static final int MY_REQUEST_CAMERA=342;
     private static final String URL="https://winda1996.000webhostapp.com/FSA/action/actionMobile_MakeReport.php";
 
     EditText editTextUserName, editTextKebAlatMakan, editTextKebTempatMakan,
@@ -111,6 +112,19 @@ public class MakeReportActivity extends Activity {
     protected void onResume() {
         super.onResume();
         //checkGPS();
+        if (MainActivity.InternetConnection) {
+            editTextAlasan.setVisibility(View.GONE);
+            checkGPS();
+            btnSaveSurvey.setText("Send");
+            editTextLokasi.setEnabled(false);
+        }
+        else
+        {
+            editTextAlasan.setVisibility(View.VISIBLE);
+            checkGPS();
+            btnSaveSurvey.setText("Save");
+            editTextLokasi.setEnabled(true);
+        }
     }
 
     @Override
@@ -189,6 +203,7 @@ public class MakeReportActivity extends Activity {
                 }
                 else
                 {
+
                     saveReport();
 //                        writeToFile(data,getApplicationContext());
 //                        //surveyDataBaseAdapter.insertEntry(userName, kebAM, kebAM, nilK);
@@ -224,7 +239,9 @@ public class MakeReportActivity extends Activity {
             Toast.makeText(getBaseContext(),"All field and photo is required.",Toast.LENGTH_LONG).show();
         }
         else {
-            surveyDone(excuse,surroundingH,cutleryH,foodH,address,stringImage);
+            Toast.makeText(getApplicationContext(), "Data Survey Saved ", Toast.LENGTH_LONG).show();
+            surveyDone(excuse,surroundingH,cutleryH,foodH,address,stringImage,lat_,long_);
+            finish();
         }
     }
 
@@ -232,6 +249,12 @@ public class MakeReportActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case MY_REQUEST_FINE_LOC:{
+                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+                {
+                    return;
+                }
+            }
+            case MY_REQUEST_CAMERA:{
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
                 {
                     return;
@@ -395,7 +418,9 @@ public class MakeReportActivity extends Activity {
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(getBaseContext(),response, Toast.LENGTH_LONG).show();
-                            deleteTask();
+                            //deleteTask();
+                            updateDone();
+                            finish();
                         }
                     },
                     new Response.ErrorListener() {
@@ -428,6 +453,13 @@ public class MakeReportActivity extends Activity {
         }
     }
 
+    private void updateDone() {
+        AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getApplicationContext());
+        datasource.open();
+        datasource.updateSend(id_assignment);
+        datasource.close();
+    }
+
     private void deleteTask() {
         AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getApplicationContext());
         datasource.open();
@@ -435,15 +467,20 @@ public class MakeReportActivity extends Activity {
         datasource.close();
     }
 
-    private void surveyDone(String alasan,String keb_TM, String keb_AM, String nil_K, String lokasi, String image) {
+    private void surveyDone(String alasan,String keb_TM, String keb_AM, String nil_K, String lokasi, String image, String lat, String long_) {
         AssignmentDataBaseAdapter datasource = new AssignmentDataBaseAdapter(getApplicationContext());
         datasource.open();
-        datasource.updateDone(id_assignment,alasan,keb_TM,keb_AM,nil_K,lokasi,image);
+        datasource.updateDone(id_assignment,alasan,keb_TM,keb_AM,nil_K,lokasi,image,lat,long_);
         datasource.close();
     }
 
     public void takeImageFromCamera(View view) {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            Log.e("request camerqa : ","disabled");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},MY_REQUEST_CAMERA);
+        }
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 

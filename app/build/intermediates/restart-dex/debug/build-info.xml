@@ -4,26 +4,26 @@
     api-level="23"
     density="xhdpi"
     format="7"
-    timestamp="826269459346697" >
+    timestamp="907926878987775" >
 
     <task
         name="javac"
-        duration="18129" />
+        duration="1481" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="603" />
+        duration="394" />
     <task
         name="verifier"
-        duration="181" />
+        duration="87" />
 
     <artifact
         location="F:\Android\FSA-Mobile\app\build\outputs\apk\app-debug.apk"
         type="MAIN" />
 
-    <build timestamp="826269459346697" >
+    <build timestamp="907926878987775" >
         <artifact
             location="F:\Android\FSA-Mobile\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />

@@ -52,7 +52,6 @@ public class MainActivity extends Activity
         bundle = new Bundle();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-
             // TODO: Consider calling
             Log.e("request location : ","disabled");
 
@@ -120,7 +119,7 @@ public class MainActivity extends Activity
                 // check if the Stored password matches with  Password entered by user
                 if(password.equals(storedPassword))
                 {
-                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     openIntent(AssignmentActivity.class, bundle);
                 }

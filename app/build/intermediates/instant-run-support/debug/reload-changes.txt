@@ -1,6 +1,7 @@
 CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentActivity$override.class
-CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\MakeReportActivity$override.class
+CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentAdapter$3$override.class
+CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\MainActivity$2$override.class
+CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentAdapter$4$override.class
+CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentAdapter$override.class
 CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
-CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentActivity$1$override.class
-CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentActivity$3$override.class
-CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentActivity$2$override.class
+CHANGED,F:\Android\FSA-Mobile\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\dvlchm\fsa\AssignmentAdapter$5$override.class

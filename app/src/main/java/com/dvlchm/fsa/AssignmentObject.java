@@ -14,7 +14,7 @@ public class AssignmentObject {
     }
 
     public AssignmentObject(String assignmentId_, String locationName_ , String idLokasi_, String idSurveyor_, int done, int keb_TM,
-                            int keb_AM, int nil_K, String excuse, String address, String image) {
+                            int keb_AM, int nil_K, String excuse, String address, String image, String lat, String longitude) {
         this.assignmentId = assignmentId_;
         this.locationName = locationName_;
         this.idLokasi = idLokasi_;
@@ -26,6 +26,8 @@ public class AssignmentObject {
         this.excuse=excuse;
         this.address=address;
         this.image=image;
+        this.lat=lat;
+        this.longitude=longitude;
     }
 
     private String assignmentId;
@@ -119,5 +121,17 @@ public class AssignmentObject {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getLat() {return this.lat;}
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLongitude() {return this.longitude;}
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
